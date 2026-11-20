@@ -1,13 +1,9 @@
 # Loan Repayment Analysis (5024CMD Data Science, Individual Assignment)
 
-**Student:** Nicole Gin Zheng Yan  
-**Course:** 5024CMD Data Science, INTI International College Penang (Coventry University)  
-**Lecturer:** Light Lau Teng Lye  
-**Semester:** August 2026
 
 This repository holds the code, data files and prototype that accompany the report *5024CMD Portfolio*. The project asks: **to what extent can FICO score, interest rate, debt-to-income ratio and revolving utilisation predict whether a loan is fully repaid?** The outcome is `not.fully.paid` (0 = repaid, 1 = not fully repaid).
 
-Dataset: [Loan Data on Kaggle](https://www.kaggle.com/datasets/itssuru/loan-data), 9,578 loans and 14 attributes, supplied by the lecturer.
+Dataset: Loan Data, 9,578 loans and 14 attributes, supplied by the lecturer.
 
 ## Repository contents
 
