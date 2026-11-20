@@ -1,0 +1,59 @@
+@relation loan_50
+
+@attribute fico {Low,Medium,High}
+@attribute int_rate {Low,Medium,High}
+@attribute dti {Low,Medium,High}
+@attribute revol_util {Low,Medium,High}
+@attribute not_fully_paid {Paid,Not_Paid}
+
+@data
+Low,High,Medium,High,Paid
+High,Medium,Medium,Medium,Paid
+Medium,Medium,Medium,High,Not_Paid
+Low,High,High,Low,Paid
+Medium,Medium,Low,Low,Paid
+Medium,Medium,High,Medium,Paid
+High,Low,Medium,Low,Paid
+Medium,Low,Medium,Low,Paid
+Medium,Medium,Medium,Medium,Paid
+Medium,High,Low,Low,Paid
+Low,High,Medium,Medium,Not_Paid
+Low,High,Low,High,Paid
+Medium,Medium,High,Medium,Paid
+Medium,High,Medium,High,Paid
+Medium,Low,Medium,Medium,Paid
+Low,High,Low,High,Not_Paid
+High,Low,Low,Low,Paid
+Medium,Medium,Medium,High,Paid
+High,Low,Low,Low,Paid
+Low,High,Low,High,Paid
+High,Low,Low,Medium,Paid
+Medium,Medium,Low,Low,Paid
+Medium,Medium,High,High,Paid
+Medium,Medium,Medium,Low,Paid
+Medium,Medium,High,High,Paid
+Medium,Medium,Medium,Low,Paid
+Medium,High,Medium,Low,Paid
+Medium,Medium,Medium,Low,Paid
+Low,High,Medium,Low,Not_Paid
+Medium,High,Low,Medium,Paid
+Medium,Medium,Medium,Medium,Paid
+High,High,High,High,Paid
+Low,Medium,Low,High,Paid
+Low,High,Medium,High,Paid
+Low,High,Medium,High,Paid
+High,Medium,High,Low,Paid
+Low,Medium,Medium,High,Paid
+High,Medium,Medium,Low,Not_Paid
+High,Medium,Medium,Low,Paid
+Medium,Medium,Medium,Medium,Paid
+High,Low,Medium,Low,Paid
+Medium,Low,High,Medium,Paid
+Medium,Medium,Medium,High,Paid
+Medium,High,High,Medium,Not_Paid
+Medium,Medium,Low,Medium,Paid
+Low,Medium,Medium,Low,Paid
+Medium,Low,Medium,Medium,Paid
+Medium,Medium,Low,Low,Paid
+Low,Medium,Medium,Medium,Paid
+Low,Medium,Low,High,Paid

@@ -1,0 +1,119 @@
+=== Run information ===
+
+Scheme:       weka.associations.Apriori -N 10000 -T 0 -C 0.5 -D 0.05 -U 1.0 -M 0.05 -S -1.0 -A -c -1
+Relation:     loan_50
+Instances:    50
+Attributes:   5
+              fico
+              int_rate
+              dti
+              revol_util
+              not_fully_paid
+=== Associator model (full training set) ===
+
+
+Apriori
+=======
+
+Minimum support: 0.05 (3 instances)
+Minimum metric <confidence>: 0.5
+Number of cycles performed: 19
+
+Generated sets of large itemsets:
+
+Size of set of large itemsets L(1): 15
+
+Size of set of large itemsets L(2): 42
+
+Size of set of large itemsets L(3): 28
+
+Size of set of large itemsets L(4): 4
+
+Best rules found:
+
+    1. int_rate=Low 9 ==> not_fully_paid=Paid 9    conf:(1)
+    2. fico=Medium revol_util=Low 9 ==> not_fully_paid=Paid 9    conf:(1)
+    3. int_rate=Medium revol_util=Medium 8 ==> not_fully_paid=Paid 8    conf:(1)
+    4. fico=Medium dti=Low 6 ==> not_fully_paid=Paid 6    conf:(1)
+    5. int_rate=Medium dti=Low 6 ==> not_fully_paid=Paid 6    conf:(1)
+    6. dti=Low revol_util=Low 6 ==> not_fully_paid=Paid 6    conf:(1)
+    7. fico=Medium int_rate=Medium revol_util=Low 6 ==> not_fully_paid=Paid 6    conf:(1)
+    8. fico=Medium int_rate=Medium revol_util=Medium 6 ==> not_fully_paid=Paid 6    conf:(1)
+    9. fico=Low int_rate=Medium 5 ==> not_fully_paid=Paid 5    conf:(1)
+   10. fico=High int_rate=Low 5 ==> not_fully_paid=Paid 5    conf:(1)
+   11. int_rate=Low dti=Medium 5 ==> not_fully_paid=Paid 5    conf:(1)
+   12. int_rate=Low revol_util=Low 5 ==> not_fully_paid=Paid 5    conf:(1)
+   13. int_rate=Medium dti=High 5 ==> not_fully_paid=Paid 5    conf:(1)
+   14. fico=Medium dti=Medium revol_util=Low 5 ==> not_fully_paid=Paid 5    conf:(1)
+   15. fico=Medium dti=Medium revol_util=Medium 5 ==> not_fully_paid=Paid 5    conf:(1)
+   16. int_rate=Medium dti=Medium revol_util=Medium 5 ==> not_fully_paid=Paid 5    conf:(1)
+   17. fico=Medium int_rate=Low 4 ==> not_fully_paid=Paid 4    conf:(1)
+   18. int_rate=Low revol_util=Medium 4 ==> not_fully_paid=Paid 4    conf:(1)
+   19. fico=Low dti=Medium revol_util=High 4 ==> not_fully_paid=Paid 4    conf:(1)
+   20. fico=Medium int_rate=Medium dti=Low 4 ==> not_fully_paid=Paid 4    conf:(1)
+   21. fico=Medium int_rate=Medium dti=High 4 ==> not_fully_paid=Paid 4    conf:(1)
+   22. fico=Medium dti=Low revol_util=Low 4 ==> not_fully_paid=Paid 4    conf:(1)
+   23. fico=High int_rate=Low revol_util=Low 4 ==> not_fully_paid=Paid 4    conf:(1)
+   24. int_rate=High dti=Medium revol_util=High 4 ==> not_fully_paid=Paid 4    conf:(1)
+   25. fico=High dti=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   26. int_rate=Low dti=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   27. dti=Low revol_util=Medium 3 ==> not_fully_paid=Paid 3    conf:(1)
+   28. dti=High revol_util=High 3 ==> not_fully_paid=Paid 3    conf:(1)
+   29. fico=Low int_rate=Medium dti=Medium 3 ==> not_fully_paid=Paid 3    conf:(1)
+   30. fico=Low int_rate=Medium revol_util=High 3 ==> not_fully_paid=Paid 3    conf:(1)
+   31. fico=Medium int_rate=Low dti=Medium 3 ==> not_fully_paid=Paid 3    conf:(1)
+   32. fico=Medium int_rate=Low revol_util=Medium 3 ==> not_fully_paid=Paid 3    conf:(1)
+   33. fico=High int_rate=Low dti=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   34. int_rate=Low dti=Medium revol_util=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   35. int_rate=Medium dti=Low revol_util=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   36. fico=Low int_rate=High dti=Medium revol_util=High 3 ==> not_fully_paid=Paid 3    conf:(1)
+   37. fico=Medium int_rate=Medium dti=Low revol_util=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   38. fico=Medium int_rate=Medium dti=Medium revol_util=Low 3 ==> not_fully_paid=Paid 3    conf:(1)
+   39. fico=Medium int_rate=Medium dti=Medium revol_util=Medium 3 ==> not_fully_paid=Paid 3    conf:(1)
+   40. fico=Medium int_rate=Medium 17 ==> not_fully_paid=Paid 16    conf:(0.94)
+   41. dti=Low 14 ==> not_fully_paid=Paid 13    conf:(0.93)
+   42. fico=Medium dti=Medium 14 ==> not_fully_paid=Paid 13    conf:(0.93)
+   43. fico=Medium 26 ==> not_fully_paid=Paid 24    conf:(0.92)
+   44. int_rate=Medium 26 ==> not_fully_paid=Paid 24    conf:(0.92)
+   45. fico=Medium revol_util=Medium 11 ==> not_fully_paid=Paid 10    conf:(0.91)
+   46. fico=High 10 ==> not_fully_paid=Paid 9    conf:(0.9)
+   47. int_rate=Medium revol_util=Low 10 ==> not_fully_paid=Paid 9    conf:(0.9)
+   48. revol_util=Low 19 ==> not_fully_paid=Paid 17    conf:(0.89)
+   49. dti=High 9 ==> not_fully_paid=Paid 8    conf:(0.89)
+   50. fico=Low revol_util=High 9 ==> not_fully_paid=Paid 8    conf:(0.89)
+   51. fico=Medium int_rate=Medium dti=Medium 9 ==> not_fully_paid=Paid 8    conf:(0.89)
+   52. revol_util=High 16 ==> not_fully_paid=Paid 14    conf:(0.88)
+   53. int_rate=Medium revol_util=High 8 ==> not_fully_paid=Paid 7    conf:(0.88)
+   54. int_rate=High revol_util=High 8 ==> not_fully_paid=Paid 7    conf:(0.88)
+   55. dti=Medium revol_util=Medium 8 ==> not_fully_paid=Paid 7    conf:(0.88)
+   56. dti=Medium revol_util=High 8 ==> not_fully_paid=Paid 7    conf:(0.88)
+   57. revol_util=Medium 15 ==> not_fully_paid=Paid 13    conf:(0.87)
+   58. int_rate=Medium dti=Medium 15 ==> not_fully_paid=Paid 13    conf:(0.87)
+   59. fico=High revol_util=Low 7 ==> not_fully_paid=Paid 6    conf:(0.86)
+   60. dti=Medium 27 ==> not_fully_paid=Paid 23    conf:(0.85)
+   61. fico=Medium dti=High 6 ==> not_fully_paid=Paid 5    conf:(0.83)
+   62. fico=Medium revol_util=High 6 ==> not_fully_paid=Paid 5    conf:(0.83)
+   63. fico=Low int_rate=High revol_util=High 6 ==> not_fully_paid=Paid 5    conf:(0.83)
+   64. int_rate=Medium dti=Medium revol_util=Low 6 ==> not_fully_paid=Paid 5    conf:(0.83)
+   65. dti=Medium revol_util=Low 11 ==> not_fully_paid=Paid 9    conf:(0.82)
+   66. fico=Low dti=Low 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   67. fico=Medium int_rate=High 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   68. fico=High dti=Medium 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   69. int_rate=High dti=Low 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   70. dti=Low revol_util=High 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   71. fico=Low dti=Low revol_util=High 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   72. fico=Medium int_rate=Medium revol_util=High 5 ==> not_fully_paid=Paid 4    conf:(0.8)
+   73. fico=Low 14 ==> not_fully_paid=Paid 11    conf:(0.79)
+   74. fico=Low dti=Medium 8 ==> not_fully_paid=Paid 6    conf:(0.75)
+   75. fico=High int_rate=Medium 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   76. int_rate=High revol_util=Low 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   77. dti=High revol_util=Medium 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   78. fico=Medium dti=Medium revol_util=High 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   79. fico=Medium dti=High revol_util=Medium 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   80. fico=High dti=Medium revol_util=Low 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   81. int_rate=Medium dti=Medium revol_util=High 4 ==> not_fully_paid=Paid 3    conf:(0.75)
+   82. int_rate=High 15 ==> not_fully_paid=Paid 11    conf:(0.73)
+   83. int_rate=High dti=Medium 7 ==> not_fully_paid=Paid 5    conf:(0.71)
+   84. fico=Low int_rate=High 9 ==> not_fully_paid=Paid 6    conf:(0.67)
+   85. fico=Low int_rate=High dti=Medium 5 ==> not_fully_paid=Paid 3    conf:(0.6)
+

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Loan Repayment Rule Checker</title>
+<style>
+:root{--bg:#f6f7f9;--card:#fff;--tx:#1b2430;--mu:#5d6b7a;--bd:#d9dee5;--ac:#2e75b6;--ok:#1e7b46;--okb:#e3f4ea;--no:#8a5a00;--nob:#fff3d6;--er:#c0392b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14181d;--card:#1d232b;--tx:#e8ecf1;--mu:#9aa7b4;--bd:#323b46;--ac:#6aaee8;--ok:#6fd49a;--okb:#16301f;--no:#f0c36a;--nob:#3a2e12;--er:#ff8a7a}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:800px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.4rem;margin:0 0 4px}h2{font-size:1.05rem;margin:0 0 10px}
+.sub,.note{color:var(--mu);font-size:.88rem}.sub{font-size:1rem;margin:0 0 18px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.grid{grid-template-columns:1fr}}
+label{display:block;font-weight:600;font-size:.9rem;margin-bottom:3px}
+small{color:var(--mu);font-weight:400}
+input{width:100%;padding:9px 10px;border:1px solid var(--bd);border-radius:6px;background:var(--bg);color:var(--tx);font-size:1rem}
+.cat{font-size:.85rem;color:var(--ac);min-height:1.2em;margin-top:2px}
+.row{display:flex;gap:10px;margin-top:14px}
+button{padding:10px 18px;border-radius:6px;border:1px solid var(--ac);background:var(--ac);color:#fff;font-size:1rem;cursor:pointer}
+button.alt{background:transparent;color:var(--ac)}
+#err{color:var(--er);margin-top:10px;min-height:1.2em;font-size:.9rem}
+.res{border-radius:8px;padding:14px;margin-bottom:10px}
+.res.ok{background:var(--okb);color:var(--ok)}.res.no{background:var(--nob);color:var(--no)}
+.res b{font-size:1.2rem}
+.warn{border-left:4px solid var(--no);background:var(--nob);color:var(--no);padding:8px 12px;border-radius:4px;margin:8px 0;font-size:.9rem}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{border-bottom:1px solid var(--bd);padding:6px 8px;text-align:left;white-space:nowrap}
+tr.hit td{background:var(--okb)}tr.off td{color:var(--mu)}tr.off td:nth-child(2),tr.off td:nth-child(3){text-decoration:line-through}
+</style>
+</head>
+<body>
+<main>
+<h1>Loan Repayment Rule Checker</h1>
+<p class="sub">Enter a borrower’s four attributes. The page converts them to Low, Medium or High (Table 1 cut-offs) and applies the association rules from the 10-record Apriori run that survived the full-data check.</p>
+
+<div class="card">
+<h2>Borrower attributes</h2>
+<div class="grid">
+<div><label for="fico">FICO score <small>(300–850)</small></label><input id="fico" type="number" step="1" placeholder="e.g. 712"><div class="cat" id="c-fico"></div></div>
+<div><label for="int">Interest rate <small>(% per year)</small></label><input id="int" type="number" step="0.01" placeholder="e.g. 12.5"><div class="cat" id="c-int"></div></div>
+<div><label for="dti">Debt-to-income ratio <small>(dti)</small></label><input id="dti" type="number" step="0.01" placeholder="e.g. 14.2"><div class="cat" id="c-dti"></div></div>
+<div><label for="rev">Revolving utilisation <small>(%)</small></label><input id="rev" type="number" step="0.1" placeholder="e.g. 35"><div class="cat" id="c-rev"></div></div>
+</div>
+<div class="row"><button id="go">Check rules</button><button class="alt" id="clr">Clear</button></div>
+<div id="err" role="alert"></div>
+</div>
+
+<div class="card" id="out" hidden><h2>Result</h2><div id="res"></div></div>
+
+<div class="card">
+<h2>Rule set (all 7 rules ending in the outcome, report Table 9)</h2>
+<div class="tw"><table id="rt"><thead><tr><th>#</th><th>IF</th><th>THEN</th><th>Supp.</th><th>Conf.</th><th>Lift</th><th>Paid rate, full data*</th><th>Status</th></tr></thead><tbody></tbody></table></div>
+<p class="note">Ranked by confidence, then lift, then support. Struck-through rules are listed but not applied. *Share of Paid loans among all 9,578 loans in that band, using the same cut-offs as this page (overall Paid rate 84.0%). Cut-offs: FICO &lt; 687 / &lt; 732; interest rate &lt; 10.9% / &lt; 13.8%; dti &lt; 9.59 / &lt; 18.87; utilisation &lt; 38.87% / &lt; 71.53%. These come from the 50-record sample, so they differ from the full-data bands in report Table 6.</p>
+</div>
+
+<div class="card">
+<h2>Limitations</h2>
+<p class="note">The rules come from 10 deliberately chosen records (7 Paid, 3 Not_Paid), so they illustrate the technique and are not a lending tool. <b>No rule predicts Not_Paid</b>: the three Not_Paid loans share no value on any attribute, and class-association rules on the 50-record sample (min. support 0.05, min. confidence 0.5) also found none. The checker therefore returns only “Paid” or “no rule matched”, and never flags a likely default. Lift is a ceiling set by the 70/30 subset (1.43), not evidence of strength; in the full data the two applied rules have lift of about 1.0. Rules on high dti and medium interest rate are not applied because the full data contradicts them. The Medium-FICO rule is applied but is marginal: its full-data Paid rate with these cut-offs (83.5%) is slightly below the 84.0% base rate.</p>
+</div>
+</main>
+
+<script>
+// use:false keeps a rule visible but stops it being applied. pr = Paid % in full data (this page's cut-offs).
+var RULES=[
+ {ifs:{fico:"Medium"},sup:.5,conf:1,lift:1.43,pr:83.5,use:true,st:"Applied (marginal)"},
+ {ifs:{fico:"Medium",int:"Medium"},sup:.5,conf:1,lift:1.43,pr:null,use:false,st:"Extension of rule 1"},
+ {ifs:{dti:"High"},sup:.3,conf:1,lift:1.43,pr:81.4,use:false,st:"Contradicted"},
+ {ifs:{fico:"Medium",rev:"Low"},sup:.3,conf:1,lift:1.43,pr:null,use:false,st:"Extension; not validated"},
+ {ifs:{fico:"Medium",int:"Medium",rev:"Low"},sup:.3,conf:1,lift:1.43,pr:null,use:false,st:"Extension; not validated"},
+ {ifs:{int:"Medium"},sup:.5,conf:.83,lift:1.19,pr:83.8,use:false,st:"Contradicted"},
+ {ifs:{rev:"Low"},sup:.4,conf:.8,lift:1.14,pr:87.2,use:true,st:"Applied"}
+];
+RULES.sort(function(a,b){return b.conf-a.conf||b.lift-a.lift||b.sup-a.sup});
+var NAMES={fico:"fico",int:"int.rate",dti:"dti",rev:"revol.util"};
+var CUT={fico:[687,732],int:[10.9,13.8],dti:[9.586667,18.873333],rev:[38.866667,71.533333]};
+var LIM={fico:[300,850],int:[0,100],dti:[0,100],rev:[0,200]};
+// default rate (%) by band across the 9,578 loans, same cut-offs
+var DR={fico:{Low:22.3,Medium:16.5,High:9.4},int:{Low:9.0,Medium:16.2,High:22.8},dti:{Low:14.9,Medium:15.7,High:18.6},rev:{Low:12.8,Medium:16.9,High:20.2}};
+var KEYS=["fico","int","dti","rev"];
+function cat(k,v){return v<CUT[k][0]?"Low":v<CUT[k][1]?"Medium":"High"}
+function $(i){return document.getElementById(i)}
+function ifText(r){return Object.keys(r.ifs).map(function(k){return NAMES[k]+" = "+r.ifs[k]}).join(" AND ")}
+
+var tb=document.querySelector("#rt tbody");
+RULES.forEach(function(r,i){
+ var tr=document.createElement("tr");r.el=tr;if(!r.use)tr.className="off";
+ tr.innerHTML="<td>"+(i+1)+"</td><td>"+ifText(r)+"</td><td>not.fully.paid = Paid</td><td>"+r.sup.toFixed(2)+"</td><td>"+r.conf.toFixed(2)+"</td><td>"+r.lift.toFixed(2)+"</td><td>"+(r.pr==null?"n/a":r.pr+"%")+"</td><td>"+r.st+"</td>";
+ tb.appendChild(tr);
+});
+KEYS.forEach(function(k){$(k).addEventListener("input",function(){
+ var v=parseFloat($(k).value),c;
+ $("c-"+k).textContent=isNaN(v)?"":(c=cat(k,v),"Category: "+c+" (default rate "+DR[k][c]+"% in full data)");
+})});
+
+function run(){
+ $("err").textContent="";var v={},c={},k,i;
+ for(i=0;i<4;i++){k=KEYS[i];v[k]=parseFloat($(k).value);
+  if(isNaN(v[k])){$("err").textContent="Please fill in all four attributes.";return}
+  if(v[k]<LIM[k][0]||v[k]>LIM[k][1]){$("err").textContent="Value for "+NAMES[k]+" is outside the expected range ("+LIM[k][0]+" to "+LIM[k][1]+").";return}
+  c[k]=cat(k,v[k])}
+ var hits=RULES.filter(function(r){return r.use&&Object.keys(r.ifs).every(function(x){return c[x]===r.ifs[x]})});
+ RULES.forEach(function(r){r.el.classList.toggle("hit",hits.indexOf(r)>-1)});
+ var h="<p class='note'>Categories: "+KEYS.map(function(x){return NAMES[x]+" = <b>"+c[x]+"</b> ("+DR[x][c[x]]+"% default in full data)"}).join(", ")+"</p>";
+ if(hits.length){
+  var t=hits[0];
+  h+="<div class='res ok'><b>Rule output: Paid</b><br>Top matching rule: IF "+ifText(t)+" THEN Paid (confidence "+t.conf.toFixed(2)+", lift "+t.lift.toFixed(2)+", support "+t.sup.toFixed(2)+"). This rule’s Paid rate in the full data is "+t.pr+"%, against 84.0% overall, so it is a weak signal, not a guarantee.</div>";
+  if(hits.length>1)h+="<p class='note'>"+(hits.length-1)+" other rule(s) also matched and agree.</p>";
+  if(c.int==="High")h+="<div class='warn'>Caution: interest rate is High, a band with a "+DR.int.High+"% default rate in the full data. The rules ignore this attribute, so “Paid” should not be trusted here.</div>";
+  if(c.fico==="Low"||c.rev==="High")h+="<div class='warn'>Caution: "+(c.fico==="Low"?"FICO is Low ("+DR.fico.Low+"% default)":"utilisation is High ("+DR.rev.High+"% default)")+". Other attributes point to higher risk than the matched rule reflects.</div>";
+ }else{
+  h+="<div class='res no'><b>No rule matched</b><br>None of the applied rules covers this combination, so there is no prediction. This does not mean the loan is likely to default. In the full data about 30% of loans fall in this group, with a Paid rate of 80.4%.</div>";
+ }
+ $("res").innerHTML=h;$("out").hidden=false;
+}
+$("go").addEventListener("click",run);
+document.addEventListener("keydown",function(e){if(e.key==="Enter")run()});
+$("clr").addEventListener("click",function(){
+ KEYS.forEach(function(k){$(k).value="";$("c-"+k).textContent=""});
+ $("out").hidden=true;$("err").textContent="";
+ RULES.forEach(function(r){r.el.classList.remove("hit")});
+});
+</script>
+</body>
+</html>
